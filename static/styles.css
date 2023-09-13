@@ -1,0 +1,56 @@
+/* Style for SMB Bot's messages */
+.bot-message {
+    color: #20A199; /* Set the color for SMB Bot's messages */
+}
+
+/* Style for user (You) messages */
+.user-message {
+    color: #EA6515; /* Set the color for user (You) messages */
+}
+
+
+
+
+
+/* Example styles (customize as needed) */
+#chat-container {
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #dc8e60;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+#user-input {
+    width: 92%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#send-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #20A199;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Add more styling as needed */

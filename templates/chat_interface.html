@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-messages">
+            <!-- Display the greeting message -->
+            <div class="message">SMB Bot: Hello there! 👋 Thank you for providing your name and email, {{ customer_name }}. How can I assist you today?</div>
+            
+        {% for message in messages %}
+            {% if message[0] == 'User' %}
+                <div class="message user-message">{{ customer_name }}: {{ message[1] }}</div>
+            {% else %}
+                <div class="message bot-message">SMB Bot: {{ message[1] }}</div>
+            {% endif %}
+        {% endfor %}
+        
+        
+
+        <!-- Leave a blank line here -->
+        <div class="message"></div>
+
+        <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+        <button id="send-button">Send</button>
+        
+        <!-- Display the bot's response message with the safe filter -->
+        <div class="message">{{ response | safe }}</div>
+    </div>
+    <script>
+        var customer_name = "{{customer_name}}"; // Define customer_name from Flask variable
+    </script>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Get the input field and the send button
+        var userInput = document.getElementById("user-input");
+        var sendButton = document.getElementById("send-button");
+
+        //Add an event listener for the Enter key
+        userInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                // Triger the clic event on the send button
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>

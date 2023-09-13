@@ -1,0 +1,1 @@
+"All your data will be in this folder in txt files but you can use csv txt databases up to you but if you change it you might need to change the code "
