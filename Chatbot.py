@@ -16,6 +16,7 @@ from langchain.indexes.vectorstore import VectorStoreIndexWrapper
 from langchain.llms import OpenAI
 from langchain.vectorstores import Chroma
 from dotenv import load_dotenv
+from datetime import datetime, timedelta # import delta modules
 
 load_dotenv()
 
@@ -33,14 +34,51 @@ customer_name = ""  # Initialize customer_name as an empty string
 # Use this variable to track whether the name and email have been collected
 info_collected = False
 
+# Function to save chat history to txt file
+def save_chat_history(chat_history, customer_name):
+    chat_history_folder = "chat_history"
+    os.makedirs(chat_history_folder, exist_ok=True)
+    chat_history_file = os.path.join(chat_history_folder, f"{customer_name}_chat_history.txt")
+
+    # Open the file in append mode and write the conversation
+    with open(chat_history_file, mode='a') as file:
+        user_input, bot_response = chat_history[-1] # Get the last interaction
+        file.write(f"{customer_name}: {user_input}\n")
+        file.write(f"SMB Bot: {bot_response}\n")
+
+    
+    # Clean up old chat history files (older than 30 days)
+    cleanup_old_chat_history(chat_history_folder)
+
+def cleanup_old_chat_history(folder):
+    max_age_days = 30
+    current_time = datetime.now()
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
+        if current_time - file_creation_time > timedelta(days=max_age_days):
+            os.remove(file_path)
+
+
+# Check if the file customer_info.csv exists or create it if it doesn't
+if not os.path.exists("customer_info.csv"):
+    with open("customer_info.csv", mode="w", newline='') as info_file:
+        # Create a CSV writer object
+        info_writer = csv.writer(info_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        
+        # Write a header row (if needed)
+        info_writer.writerow(["Customer Name", "User Email"])
+        
+
 # Read the customer name from the CSV file if available
-if os.path.exists("customer_info.csv"):
-    with open("customer_info.csv", mode="r") as info_file:
-        info_reader = csv.reader(info_file)
-        for row in info_reader:
-            if len(row) >= 1:
-                customer_name = row[0]
-                break
+# Now you can safely read the customer name from the file
+customer_name = ""
+with open("customer_info.csv", mode="r") as info_file:
+    info_reader = csv.reader(info_file)
+    for row in info_reader:
+        if len(row) >= 1:
+            customer_name = row[0]
+            break
 # print("Customer Name:", customer_name)  # Add this line for debugging
 
 # Initialize the chatbot chain
@@ -107,8 +145,11 @@ def chat():
     # Generate a response from the chatbot model based on the user's query
     result = chain({"question": user_input, "chat_history": chat_history})
 
-    # Check if the response from the bot indicates it doesn't have certain information or mentions price-related keywords
-    keywords_to_trigger_apollogy = ['price', 'cost', 'pricing', 'quote', "I'm sorry", "I apologize", "I don't have" ]
+    # Check if the response from the bot indicates it doesn't have certain information keywords
+    keywords_to_trigger_apology = ["I'm sorry", "I apologize", "I don't have" ]
+
+    # Check if the response from the bot contains specific keywords
+    keywords_to_trigger_pricing = ['price', 'cost', 'pricing']
     
     # Check if the response from the bot contains specific keywords
     keywords_for_services= ['benefits', 'features', 'services']
@@ -116,19 +157,28 @@ def chat():
     # Check if the response from the bot contains specific keywords
     keywords_for_social_media= ['social media', 'instagram', 'facebook', 'youtube']
 
+    response = None # Initialize response
 
-    if any(keyword in result['answer'].lower() for keyword in keywords_to_trigger_apollogy):
+    if any(keyword in result['answer'].lower() for keyword in keywords_to_trigger_apology):
         response = Markup(f"SMB Bot: I apologize, but I don't have access to specific information at the moment. " \
                    f"You can find more information or get in touch with us by visiting our " \
                    f"<a href='https://smbglobalmarketing.com/get-in-touch/' target='_blank'>Contact Us</a> page on our website. " \
                    f"Is there anything else I can assist you with?<br><br>")
 
-    elif any(keyword in result['answer'].lower() for keyword in keywords_for_services):
+    if any(keyword in user_input.lower() for keyword in keywords_to_trigger_pricing):
+        response = Markup(f"SMB Bot: Our pricing structure is flexible and based on the specific needs and scope of each project." \
+                   f"We offer both one-time and ongoing marketing services, and our rates vary depending on factors such as the complexity of the project, the number of channels and tactics involved, and the expected outcomes."\
+                   f"We provide transparent pricing quotes and detailed proposals before starting any project, so our clients know exactly what to expect and can make informed decisions. "\
+                   f"You can find more information or get in touch with us by visiting our " \
+                   f"<a href='https://smbglobalmarketing.com/get-in-touch/' target='_blank'>Contact Us</a> page on our website. " \
+                   f"Is there anything else I can assist you with?<br><br>")                   
+
+    elif any(keyword in user_input.lower() for keyword in keywords_for_services):
         response = Markup(f"SMB Bot: {result['answer']} \n\n" \
                f"If you like to learn more about our offerings, you can visit " \
                f"<a href='https://smbglobalmarketing.com/services/' target='_blank'>services</a> page on our website.")
 
-    elif any(keyword in result['answer'].lower() for keyword in keywords_for_social_media):
+    elif any(keyword in user_input.lower() for keyword in keywords_for_social_media):
         response = Markup(f"SMB Bot: {result['answer']} \n\n" \
                 f"SMB Bot: You can connect with us by Email at: <a href='mailto:hello@smbglobalmarketing.com'>hello@smbglobalmarketing.com</a> or thru our various social media platforms. "
                 f"Find us on <a href='https://www.facebook.com/smbglobalmarketing' target='_blank'>Facebook</a>, "
@@ -140,16 +190,21 @@ def chat():
         response = Markup(f"SMB Bot: You can reach out to us via email at: <a href='mailto:hello@smbglobalmarketing.com'>hello@smbglobalmarketing.com</a>.")
                 
 
-    else:
+    if response is None:
         response = Markup(f"SMB Bot: {result['answer']}")  # Remove the extra line breaks
 
     # Use the | safe filter to mark the response as safe HTML content
     response = Markup(response)
 
     # Print the response variable for debugging purposes
-    # print("Response Variable:", response)
+    print("Response Variable:", response)
 
-    chat_history.append((user_input, result['answer']))
+    # Save the chat interaction to the chat history list
+    # chat_history.append((user_input, result['answer']))
+    chat_history.append((user_input, response))  # Save the response triggered by keywords
+    
+    # Save the chat history to a txt file
+    save_chat_history(chat_history, customer_name)
     
     # Send the bot's response as a JSON object to the front end
     return jsonify({'response': response})
