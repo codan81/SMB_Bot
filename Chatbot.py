@@ -187,7 +187,7 @@ def chat():
 
     elif 'email' in result['answer'].lower():
         # Handle email-related query
-        response = Markup(f"SMB Bot: You can reach out to us via email at: <a href='mailto:hello@smbglobalmarketing.com'>hello@smbglobalmarketing.com</a>.")
+        response = Markup(f"SMB Bot: You can reach out to us via email at: <a href='mailto:hello@smbglobalmarketing.com'>hello@smbglobalmarketing.com</a>")
                 
 
     if response is None:

@@ -21,13 +21,13 @@
         {% endfor %}
         
         
-
         <!-- Leave a blank line here -->
         <div class="message"></div>
+        <div id="user-input-container">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button id="send-button">Send</button>
+        </div>
 
-        <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
-        <button id="send-button">Send</button>
-        
         <!-- Display the bot's response message with the safe filter -->
         <div class="message">{{ response | safe }}</div>
     </div>

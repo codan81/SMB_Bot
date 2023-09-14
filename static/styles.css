@@ -1,16 +1,63 @@
 /* Style for SMB Bot's messages */
-.bot-message {
-    color: #20A199; /* Set the color for SMB Bot's messages */
+.bot-message{
+    background-color: #20A199; /* Set the background color for bot's messages */
+    color: #fff; /* Set the text color for bot's messages */
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    clear: both;
+    max-width: 80%;
+    float: left; /* Align bot messages to the left */
 }
 
 /* Style for user (You) messages */
 .user-message {
-    color: #EA6515; /* Set the color for user (You) messages */
+    background-color: #EA6515; /* Set the background color for user's messages */
+    color: #fff; /* Set the text color for user's messages */
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    clear: both;
+    max-width: 70%;
+    float: right; /* Align user messages to the right */
+}
+
+/* New styles for user input container and "Send" button */
+#user-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#send-button {
+    padding: 10px 20px;
+    background-color: #20A199;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 
-
-
+/* Continue with your existing styles */
+/* Example styles (customize as needed) */
+#chat-container {
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #dc8e60;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
 /* Example styles (customize as needed) */
 #chat-container {
@@ -21,6 +68,10 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Arrange child elements vertically */
+    justify-content: space-between; /* Push elements to the top and bottom */
+   
 }
 
 #chat-messages {
@@ -37,15 +88,17 @@
     width: 92%;
     padding: 10px;
     margin-top: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 #send-button {
     display: block;
-    width: 100%;
+    width: 20%;
     padding: 10px;
     margin-top: 10px;
+    margin-bottom: 10px;
     background-color: #20A199;
     color: #fff;
     border: none;
