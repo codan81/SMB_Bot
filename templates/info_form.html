@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Info Collection</title>
     <style>
+        /* Position the chatbot in the bottom right corner */
+        #content-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999; /* Adjust the z-index as needed */
+        }
         body {
             font-family: sans-serif;
             background-color: #f3f3f3;
-            text-align: center;
+            text-align:center
         }
 
         h2 {
@@ -21,7 +28,7 @@
 
         form {
             background-color: #dc8e60;
-            max-width: 300px;
+            max-width: 500px;
             margin: 0 auto;
             padding: 20px;
             border-radius: 5px;
@@ -56,20 +63,23 @@
         input[type="submit"]:hover {
             background-color: #EA6515;
         }
+
     </style>
 </head>
 <body>
-    <h2>Welcome to the SMB Chatbot</h2>
-    <p>Please provide your information to continue:</p>
-    
-    <form method="post" action="/collect_info">
-        <label for="customer_name">Your Name:</label>
-        <input type="text" id="customer_name" name="customer_name" required><br><br>
+    <div id="content-container">
+        <h2>Welcome to the SMB Chatbot</h2>
+        <p>Please provide your information to continue:</p>
+        
+        <form method="post" action="/collect_info">
+            <label for="customer_name">Your Name:</label>
+            <input type="text" id="customer_name" name="customer_name" required><br><br>
 
-        <label for="user_email">Your Email:</label>
-        <input type="email" id="user_email" name="user_email" required><br><br>
+            <label for="user_email">Your Email:</label>
+            <input type="email" id="user_email" name="user_email" required><br><br>
 
-        <input type="submit" value="Continue">
+            <input type="submit" value="Continue">
     </form>
+    </div>
 </body>
 </html>

@@ -142,11 +142,25 @@ def chat():
     # Set a maximum token limit for the response
     max_response_tokens = 50  # Adjust this value as needed
 
+    # # Modify the user input to guide the conversation towards marketing
+    # # You can add a query that encourages marketing-related responses
+    # user_input = "Merketing"
+
+
     # Generate a response from the chatbot model based on the user's query
     result = chain({"question": user_input, "chat_history": chat_history})
 
+    # Limit the response length to a certain number of tokens
+    response_tokens = result['answer'].split()
+    if len(response_tokens) > max_response_tokens:
+        result['answer'] = ' '.join(response_tokens[:max_response_tokens]) + "..."  # Truncate the response
+
+    # Manually truncate and summarize the response
+    summary = "SMB Bot: Our marketing services include customized solutions, expertise, personalized attention, innovative solutions, and measurable results."
+
+
     # Check if the response from the bot indicates it doesn't have certain information keywords
-    keywords_to_trigger_apology = ["I'm sorry", "I apologize", "I don't have" ]
+    keywords_to_trigger_apology = ["I'm sorry", "I apologize", "I don't have", "I don't know" ]
 
     # Check if the response from the bot contains specific keywords
     keywords_to_trigger_pricing = ['price', 'cost', 'pricing']
@@ -155,7 +169,7 @@ def chat():
     keywords_for_services= ['benefits', 'features', 'services', "seo"]
 
     # Check if the response from the bot contains specific keywords
-    keywords_for_social_media= ['social media', 'instagram', 'facebook', 'youtube']
+    keywords_for_social_media= ['social media', 'instagram', 'facebook', 'youtube', "contact"]
 
     response = None # Initialize response
 

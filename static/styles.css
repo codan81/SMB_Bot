@@ -97,7 +97,11 @@
     cursor: pointer;
     
 }
-
-
+#chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999; /* Adjust the z-index as needed */
+}
 
 /* Add more styling as needed */
