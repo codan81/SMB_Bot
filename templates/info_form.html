@@ -1,4 +1,4 @@
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +8,83 @@
 </head>
 <body>
     <h1>Welcome to the SMB Chatbot</h1>
+    <p>Please provide your information to continue:</p>
+    
+    <form method="post" action="/collect_info">
+        <label for="customer_name">Your Name:</label>
+        <input type="text" id="customer_name" name="customer_name" required><br><br>
+
+        <label for="user_email">Your Email:</label>
+        <input type="email" id="user_email" name="user_email" required><br><br>
+
+        <input type="submit" value="Continue">
+    </form>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Info Collection</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f3f3f3;
+            text-align: center;
+        }
+
+        h2 {
+            color: #20A199;
+        }
+
+        p {
+            color: #EA6515;
+        }
+
+        form {
+            background-color: #dc8e60;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 92%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #20A199;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #EA6515;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome to the SMB Chatbot</h2>
     <p>Please provide your information to continue:</p>
     
     <form method="post" action="/collect_info">
