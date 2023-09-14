@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    
     <div id="chat-container">
         <div id="chat-messages">
             <!-- Display the greeting message -->
@@ -23,10 +24,7 @@
         
         <!-- Leave a blank line here -->
         <div class="message"></div>
-        <div id="user-input-container">
-            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
-            <button id="send-button">Send</button>
-        </div>
+       
 
         <!-- Display the bot's response message with the safe filter -->
         <div class="message">{{ response | safe }}</div>
@@ -49,5 +47,10 @@
             }
         });
     </script>
+    
+    <div id="user-input-container">
+        <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+        <button id="send-button">Send</button>
+    </div>
 </body>
 </html>

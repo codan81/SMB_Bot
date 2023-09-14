@@ -152,7 +152,7 @@ def chat():
     keywords_to_trigger_pricing = ['price', 'cost', 'pricing']
     
     # Check if the response from the bot contains specific keywords
-    keywords_for_services= ['benefits', 'features', 'services']
+    keywords_for_services= ['benefits', 'features', 'services', "seo"]
 
     # Check if the response from the bot contains specific keywords
     keywords_for_social_media= ['social media', 'instagram', 'facebook', 'youtube']
