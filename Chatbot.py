@@ -1,5 +1,3 @@
-
-
 from flask import Flask, render_template, request, jsonify, redirect
 from markupsafe import Markup
 
@@ -100,6 +98,14 @@ chain = ConversationalRetrievalChain.from_llm(
 )
 
 @app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/chatbot_icon')
+def chatbot_icon():
+    return render_template('chatbot_icon.html')
+
+@app.route('/chat_interface')
 def chat_interface():
     global info_collected
 
@@ -125,7 +131,7 @@ def collect_info():
     # Mark info as collected
     info_collected = True
 
-    return redirect('/')  # Redirect back to the chat interface
+    return redirect('/chat_interface')  # Redirect back to the chat interface
 
 @app.route('/chat', methods=['POST'])
 def chat():

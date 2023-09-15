@@ -92,11 +92,17 @@
     margin-bottom: 10px;
     background-color: #20A199;
     color: #fff;
-    border: 1px solid #20A199;
+    border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
     
 }
+
+/* Add styles for button on hover */
+#send-button:hover {
+    background-color: #EA6515; /* Change background color on hover */
+}
+
 #chat-container {
     position: fixed;
     bottom: 20px;

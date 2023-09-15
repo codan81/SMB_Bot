@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web App</title>
+    <style>
+        /* Center the container vertically and horizontally */
+        .container {
+            display: flex;
+            flex-direction: column;
+            /*justify-content: center; /* Center vertically in the middle of the screen*/
+            align-items: center; /* Center horizontally */
+            height: 100vh; /* Make the container take up the full viewport height */
+        }
+
+        /* Style for chatbot link */
+        #chatbot-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #20A199;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        #chatbot-link:hover {
+            background-color: #EA6515; /* Change background color on hover */
+        }   
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Your Web App</h1>
+        <p>This is your main web page content.</p>
+    </div>
+        
+    <!-- Add a link to the chatbot icon -->
+    <a id="chatbot-link" href="/chat_interface">Chatbot</a>
+
+    <!-- You can add other content here as needed -->
+
+</body>
+</html>

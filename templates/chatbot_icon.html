@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Icon</title>
+    <style>
+        #chatbot-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #20A199;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbot-icon">Chat</div>
+
+    <script>
+        // Add an event listener to open the chatbot when the icon is clicked
+        document.getElementById('chatbot-icon').addEventListener('click', function () {
+            // Replace 'YOUR_CHATBOT_URL' with the URL where your chatbot is running
+            window.open('/chat_interface');
+        });
+    </script>
+</body>
+</html>
