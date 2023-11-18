@@ -116,24 +116,6 @@ def chat_interface():
     else:
         return render_template('chat_interface.html', customer_name=customer_name)
 
-# @app.route('/collect_info', methods=['POST'])
-# def collect_info():
-#     global customer_name, info_collected
-
-#     # Collect and save the name and email from the web form
-#     customer_name = request.form['customer_name']
-#     user_email = request.form['user_email']
-
-#     # Save the name and email to a CSV file
-#     with open('customer_info.csv', mode='a', newline='') as info_file:
-#         info_writer = csv.writer(info_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-#         info_writer.writerow([customer_name, user_email])
-
-#     # Mark info as collected
-#     info_collected = True
-
-#     return redirect('/chat_interface')  # Redirect back to the chat interface
-
 @app.route('/collect_info', methods=['POST'])
 def collect_info():
     global customer_name, info_collected
@@ -165,10 +147,6 @@ def validate_email(email):
 def chat():
     global info_collected, customer_name
 
-    # ...
-
-    
-
     if not info_collected:
         return redirect('/')  # Redirect to collect info if it hasn't been collected yet
 
@@ -179,11 +157,6 @@ def chat():
 
     # Set a maximum token limit for the response
     max_response_tokens = 50  # Adjust this value as needed
-
-    # Modify the user input to guide the conversation towards marketing
-    # You can add a query that encourages marketing-related responses
-    # user_input = "Merketing"
-
 
     # Generate a response from the chatbot model based on the user's query
     result = chain({"question": user_input, "chat_history": chat_history})
@@ -241,9 +214,18 @@ def chat():
         # Handle email-related query
         response = Markup(f"SMB Bot: You can reach out to us via email at: <a href='mailto:hello@smbglobalmarketing.com'>hello@smbglobalmarketing.com</a>")
                 
-
+    elif 'website' in user_input.lower():
+    # Handle website-related query
+        response = Markup(f"SMB Bot: You can check our website here: <a href='https://smbglobalmarketing.com/' target='_blank'>SMB Global Marketing</a>.")
+    
     if response is None:
         response = Markup(f"SMB Bot: {result['answer']}")  # Remove the extra line breaks
+
+    # Modify the user input to guide the conversation towards marketing
+    # You can add a query that encourages marketing-related responses
+    user_input = "in digital Merketing"
+
+
 
     # Use the | safe filter to mark the response as safe HTML content
     response = Markup(response)
